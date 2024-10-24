@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Image Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: cursive;
+            /* overflow: hidden; */
+            height: 100vh;
+            background: linear-gradient(to left, #2C5364, #203A43, #0F2027);
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container h1 {
+            padding: 5px;
+            color: #fff;
+        }
+
+        input[type="text"] {
+            padding: 15px;
+            width: 50%;
+            font-size: 16px;
+            border-radius: 50px;
+            border: 2PX SOLID #fff;
+            background: transparent;
+            color: #fff;
+            /* margin-right: 10px; */
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 50px;
+            background: transparent;
+            border: 2PX solid #fff;
+            color: #fff;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .image-item {
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .app {
+            background: -webkit-linear-gradient(to left, #2C5364, #203A43, #0F2027);
+            background: linear-gradient(to left, #2C5364, #203A43, #0F2027);
+            height: auto;
+            width: 100%;
+        }
+
+        ul {
+            display: block;
+            width: 100%;
+            height: inherit;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        li:nth-child(1) {
+            position: absolute;
+            left: 10%;
+            height: 30px;
+            width: 30px;
+            background: rgba(255, 255, 255, .2);
+        }
+
+        li:nth-child(2) {
+            position: absolute;
+            left: 30%;
+            height: 45px;
+            width: 45px;
+            background: rgba(255, 255, 255, .2);
+        }
+
+        li:nth-child(3) {
+            position: absolute;
+            left: 50%;
+            height: 70px;
+            width: 70px;
+            background: rgba(255, 255, 255, .2);
+        }
+
+        li:nth-child(4) {
+            position: absolute;
+            left: 80%;
+            height: 20px;
+            width: 20px;
+            background: rgba(255, 255, 255, .2);
+        }
+
+        li {
+            animation: animate 15s linear 1s infinite;
+        }
+
+        p {
+            color: #fff;
+            font-size: 25px;
+        }
+
+        @keyframes animate {
+            from {
+                transform: translateY(+1500%) rotate(180deg)
+            }
+
+            to {
+                transform: translateY(-150%) rotate(360deg)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="app">
+        <div class="boxes">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <h1>Food Image Search</h1>
+            <input type="text" id="searchInput" placeholder="Search for food images...">
+            <button id="searchButton">Search</button>
+            <div id="gallery" class="gallery"></div>
+        </div>
+    </main>
+
+    <script>
+        const images = [
+            { src: 'https://img.freepik.com/premium-photo/plate-food-with-rice-rice-lemon_167857-68569.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Biryani' },
+            { src: 'https://img.freepik.com/free-photo/side-view-doner-with-grilled-chicken-greens-lettuce-tomato-french-fries-table_141793-4881.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Shawarma' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoaCfVFBxZJ7jEejIL01kKvex26QbVbJCAbwFmmXnCUWamXLD5Ayi-1RBG0-UHpvoRmig&usqp=CAU', alt: 'Burger' },
+            { src: 'https://img.freepik.com/premium-photo/highquality-pizza-images-perfect-food-lovers_1151350-20473.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Pizza' },
+            { src: 'https://img.freepik.com/premium-photo/asian-inspired-dish-fried-chicken-noodles-generative-ai-image_943405-12985.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Noodles' },
+            { src: 'https://img.freepik.com/premium-photo/royal-lucknowi-biryani-recipe-fragrant-rice-tender-mutton-with-saffron-traditional-setting_1241530-14020.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Biryani' },
+            { src: 'https://img.freepik.com/premium-photo/chow-mein-with-crispy-chicken-strips-chow-mein-food-image-graphy_198067-1018243.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Noodles' },
+            { src: 'https://img.freepik.com/free-photo/delicious-pizza-indoors_23-2150873874.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Pizza' },
+            { src: 'https://www.foodiesfeed.com/wp-content/uploads/2023/06/burger-with-melted-cheese.jpg', alt: 'Burger' },
+            { src: 'https://img.freepik.com/premium-photo/shawarma_1057389-38501.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Shawarma' },
+            { src: 'https://img.freepik.com/premium-photo/bowl-noodles-with-broccoli-carrots-black-background_1325059-8494.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Noodles' },
+            { src: 'https://img.freepik.com/premium-photo/mouthwatering-beef-shawarma-wrap-overflowing-with-juicy-thinly-sliced-meat-crispy-golden-o_1176565-3959.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Shawarma' },
+            { src: 'https://img.freepik.com/free-photo/delicious-pizza-indoors_23-2150873870.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Pizza' },
+            { src: 'https://img.freepik.com/free-photo/exploding-burger-with-vegetables-melted-cheese-black-background-generative-ai_157027-1734.jpg?semt=ais_hybrid', alt: 'Burger' },
+            { src: 'https://img.freepik.com/premium-photo/plate-food-with-rice-meat-vegetables_520665-40427.jpg?ga=GA1.1.1639133888.1710839055&semt=ais_hybrid', alt: 'Biryani' },
+        ];
+
+        const gallery = document.getElementById('gallery');
+
+        function displayImages(imageArray) {
+            if (imageArray.length > 0) {
+                gallery.innerHTML = imageArray
+                    .map(image => `<div class="image-item"><img src="${image.src}" alt="${image.alt}"></div>`)
+                    .join('');
+            } else {
+                gallery.innerHTML = '<p class="no-image">No images found.</p>';
+            }
+        }
+
+        displayImages(images);
+
+        document.getElementById('searchButton').onclick = function () {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredImages = images.filter(image => image.alt.toLowerCase().includes(query));
+            displayImages(filteredImages);
+        };
+    </script>
+</body>
+
+</html>
